@@ -39,38 +39,43 @@ class MyQueue(object):
         self.stack.append(value)
         #print("Enqueue {}. Queue:{}. Aux:{}".format(value, self.stack, self.stack_aux))
 
-def case0():
-    return "1 42:2:1 14:3:1 28:3:1 60:1 78:2:2"
+def my_tests():
+    def case0():
+        return "1 42:2:1 14:3:1 28:3:1 60:1 78:2:2"
 
-def expect0():
-    return ['14','14']
+    def expect0():
+        return ['14','14']
 
-queue = MyQueue()
-val_list = case0().split(":")
-res_list = []
-for line in val_list:
-    values = line.split(" ")
-    if values[0] == "1":
-        queue.put(values[1])
-    elif values[0] == "2":
-        queue.pop()
-    else:
-        response = queue.peek()
-        res_list.append(response)
-        print(response)
-#print(res_list)
-assert res_list == expect0()
+    queue = MyQueue()
+    val_list = case0().split(":")
+    res_list = []
+    for line in val_list:
+        values = line.split(" ")
+        if values[0] == "1":
+            queue.put(values[1])
+        elif values[0] == "2":
+            queue.pop()
+        else:
+            response = queue.peek()
+            res_list.append(response)
+            print(response)
+
+    assert res_list == expect0()
+
+def original_tests():
+    #original tests using inputs
+    queue = MyQueue()
+    t = int(input())
+    for line in range(t):
+        values = map(int, input().split())
+        values = list(values)
+        if values[0] == 1:
+            queue.put(values[1])
+        elif values[0] == 2:
+            queue.pop()
+        else:
+            print(queue.peek())
 
 
-#original from input
-# queue = MyQueue()
-# t = int(input())
-# for line in range(t):
-#     values = map(int, input().split())
-#     values = list(values)
-#     if values[0] == 1:
-#         queue.put(values[1])
-#     elif values[0] == 2:
-#         queue.pop()
-#     else:
-#         print(queue.peek())
+#running my own test
+my_tests()
