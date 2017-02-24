@@ -24,9 +24,9 @@ def case0():
             "add ack",
             "add acki",
             "add acka",
-            # "add ac",
-            # "add hackker",
-            # "add rank",
+            "add ac",
+            "add hackker",
+            "add rank",
             "find hac",
             "find ha",
             "find hak",
@@ -34,171 +34,77 @@ def case0():
             "find ac"
             ]
 
-class TrieNode:
+class Node:
     """
-    Without recursion
+    __slots__ makes the trick to avoid runtime error, because reserves space
+    for the declared variables and prevents the automatic creation of
+    __dict__ and __weakref__ for each instance
+
+    url: https://docs.python.org/2/reference/datamodel.html#slots
     """
+    __slots__ = ('next', 'count', 'is_complete', 'key')
+
     def __init__(self, key):
         self.is_complete = False
         self.next = {}
         self.key = key
+        self.count = 0
 
     def add(self, data):
         current_node = self
         while len(data) > 0 and current_node is not None:
             key = data[0]
-            #print("current:{}".format(current_node.key))
-
             exist = current_node.exist_next(key)
             if exist is None:
-                #print("Not exist: {}".format(key))
                 del data[0]
                 exist = Node(key)
                 exist.key = key
                 exist.is_complete = True if len(data) == 0 else False
+                exist.count = 1
                 current_node.next[key] = exist
             else:
-                #print("Exist: {}".format(key))
                 del data[0]
+                exist.count += 1
                 exist.is_complete = True if len(data) == 0 or exist.is_complete else False
 
             current_node = exist
 
-    def __getitem__(self, item):
-        # print("get:{} self.key:{}".format(item, self.key))
-        count = 0
-
+    def find(self, item):
         exist = self.exist_next(item[0])
         while len(item) > 1 and exist is not None:
             del item[0]
-            # item = item[1:]
             exist = exist.exist_next(item[0])
-            # exist = exist.next[item[0]] if item[0] in exist.next else None
 
-        # count = 0
-        # if exist is not None:
-        #     # count = 1 if exist.is_complete else 0
-        #     count += exist[""]
-        #
-        #     while exist is not None:
-        #         if len(exist.next) > 0:
-        #             for key, node in self.next.items():
-        #                 count += node[""]
-        #
-        #     if self.is_complete:
-        #         return count + 1
+        count = 0
+        if exist is not None:
+            count = exist.count
 
-        return count
+        print(count)
 
     def exist_next(self, value):
-        if value in self.next:
-            return self.next[value]
-        return None
+        return self.next[value] if value in self.next else None
 
     def __str__(self):
         for k, v in self.next.items():
             print(v)
-        return ("'{}'{}={}".format(self.key, "x" if self.is_complete else "", len(self.next)))
-
-class Node:
-    def __init__(self, key, data=""):
-        self.is_complete = False
-        self.next = {}
-        self.key = key
-
-        #print("inserting key:{} data:{}".format(key, data))
-        if len(data) > 0:
-            new_key = data[0]
-            del data[0]
-            self[new_key] = data
-        elif key is not "*":
-            self.is_complete = True
-
-    def __getitem__(self, item):
-        #print("get:{} self.key:{}".format(item, self.key))
-
-        count = 0
-        if len(self.next) > 0:
-            for key, node in self.next.items():
-                count += node[""]
-
-        if self.is_complete:
-            return count + 1
-
-        return count
-
-    def __setitem__(self, key, value):
-        #print("self.key={}".format(self.key))
-        #print("set {}={}".format(key, value))
-        if len(key) > 0:
-            exist = self.exist_next(key)
-            #exist = self.next[key] if key in self.next else None
-            if len(value) == 0 and key is not "*":
-                if exist is None:
-                    self.next[key] = Node(key)
-                else:
-                    exist.is_complete = True
-            else:
-                if exist is None:
-                    self.next[key] = Node(key, value)
-                else:
-                    new_key = value[0]
-                    del value[0]
-                    exist[new_key] = value
-
-    def exist_next(self, value):
-        if value in self.next:
-            return self.next[value]
-        return None
-        # if value in self.next.keys():
-        #     #print('exist: {}'.format(value))
-        #     return self.next[value]
-
-        #print('not exist: {}'.format(value))
-        #return None
-
-    def __str__(self):
-        for k,v in self.next.items():
-            print(v)
-        return ("'{}'{}={}".format(self.key, "x" if self.is_complete else "" , len(self.next)))
+        return ("'{}'{}={}. count={}".format(self.key, "x" if self.is_complete else "", len(self.next), self.count))
 
 
-class Tries:
+class TriesNonRecursive:
 
     def __init__(self):
-        self.root = TrieNode("*")
+        self.root = Node("*")
 
-    def add(self, value):
-        #print("### adding: {}".format(value))
-        self.root.add(list(value))
-
-        # value = list(value)
-        # key = value[0]
-        # del value[0]
-        # self.root[key] = value
+    def add(self, item):
+        self.root.add(list(item))
         #print(self.root)
 
     def find(self, item):
-        #print("### finding: {}".format(item))
-
-        item = list(item)
-        exist = self.root.exist_next(item[0])
-        while len(item) > 1 and exist is not None:
-            del item[0]
-            #item = item[1:]
-            exist = exist.exist_next(item[0])
-            #exist = exist.next[item[0]] if item[0] in exist.next else None
-
-        count = 0
-        if exist is not None:
-            #count = 1 if exist.is_complete else 0
-            count += exist[""]
-
-        print(count)
+        self.root.find(list(item))
 
 
 def my_test(cases):
-    t = Tries()
+    t = TriesNonRecursive()
     for item in cases:
         op, contact = item.split(" ")
         if op == "add":
@@ -207,31 +113,35 @@ def my_test(cases):
             t.find(contact)
 
 def from_file():
-    t = Tries()
+    t = TriesNonRecursive()
     import time
-    start = time.clock()
-    with open("hackerrank\\tries\\test2\\input.txt", 'r') as f:
-        n = int(f.readline())
-        for a0 in range(n):
-            op, contact = f.readline().strip().split(' ')
-            if op == "add":
-                t.add(contact)
-            elif op == "find":
-                t.find(contact)
-    end = time.clock()
-    print ("time: %.2gs" % (end - start))
+    all_values = []
 
+    n = 0
+    with open("hackerrank\\tries\\test12\\input.txt", 'r') as f:
+        n = int(f.readline())
+        for i in range(n):
+            all_values.append(f.readline())
+
+    start = time.clock()
+    add_count = 0
+    find_count = 0
+    for a0 in all_values:
+        op, contact = a0.strip().split(' ')
+        if op == "add":
+            t.add(contact)
+            add_count += 1
+        elif op == "find":
+            t.find(contact)
+            find_count += 1
+
+    end = time.clock()
+    print ("time: %.2gs. add_count:%s, find_count:%s" % ((end - start), add_count, find_count))
 
 def original():
     n = int(input().strip())
     for a0 in range(n):
         op, contact = input().strip().split(' ')
 
-# 4
-# add hack
-# add hackerrank
-# find hac
-# find hak
-
-#my_test(case0())
-from_file()
+my_test(case0())
+#from_file()
