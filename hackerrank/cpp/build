@@ -1,0 +1,4 @@
+
+
+clang hashtables_ransom_note.cc -o hashtables_ransom_note.o -Wall -lstdc++ -std=c++0x
+clang stacks_balanced_brackets.cc -o stacks_balanced_brackets.o -Wall -lstdc++ -std=c++0x
