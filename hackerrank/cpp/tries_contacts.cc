@@ -51,9 +51,7 @@ public:
   char letter;
   map<char, TrieNode> next;
 
-  TrieNode(){
-
-  }
+  TrieNode(){}
 
   TrieNode(char letter){
     this->count = 1;
@@ -68,35 +66,34 @@ public:
     TrieNode *current;
     current = this;
     while(it != item.end()){
-        std::cout << "it: " << *it << '\n';
+        //std::cout << "it: " << *it << '\n';
         TrieNode *exist;
         exist = this->getExist(*it, current);
 
         if (exist == NULL){
-          std::cout << "not exist: " << *it << '\n';
+          //std::cout << "not exist: " << *it << '\n';
           exist = new TrieNode(*it);
           exist->complete = it + 1 == item.end();
           current->next.insert(pair<char, TrieNode>(*it, *exist));
-
           std::cout << "adding: " << *it << " on: " << current->letter << " next size: " << current->next.size() << '\n';
         } else {
           exist->count += 1;
           exist->complete = it + 1 == item.end() || exist->complete;
           std::cout << "exist: " << exist->letter << " c:" << exist->count << " end: " << exist->complete << '\n';
         }
+
+        current = &current->next[*it];
         ++it;
-        current = exist;
     }
     //current = this;
 
   }
 
   TrieNode* getExist(char letter, TrieNode *current){
-    std::cout << "finding: " << letter << " on: " << current->letter << " size: " << current->next.size() << '\n';
+    //std::cout << "finding: " << letter << " on: " << current->letter << " size: " << current->next.size() << '\n';
     map<char, TrieNode>::iterator it;
     it = current->next.find(letter);
     if (it != current->next.end()){
-      //std::cout << "exist: " << it->first << '\n';
       return &current->next[letter];
     }
     return NULL;
@@ -122,10 +119,10 @@ public:
 void case0(){
   std::vector<string> v;
   v = {   //"add hack",
+            "add hac",
             "add ha",
-            "add hac"
             // "find hac",
-            // "add hackerrank",
+            "add hackerrank"
             // "add hackk",
             // "add hackee",
             // "find ac",
