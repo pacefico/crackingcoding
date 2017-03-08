@@ -51,39 +51,55 @@ public:
   char letter;
   map<char, TrieNode> next;
 
+  TrieNode(){
+
+  }
+
   TrieNode(char letter){
-    this->count = 0;
+    this->count = 1;
     this->letter = letter;
     this->complete = false;
   }
 
   void add(string item){
-    std::cout << "adding:" << item << '\n';
+    std::cout << "\nadding: " << item << " on: " << this->letter << '\n';
 
     string::iterator it = item.begin();
     TrieNode *current;
     current = this;
-    while(it != item.end() and current != NULL){
+    while(it != item.end()){
+        std::cout << "it: " << *it << '\n';
         TrieNode *exist;
-        exist = NULL;
-        this->getExist(*it, exist);
+        exist = this->getExist(*it, current);
 
         if (exist == NULL){
           std::cout << "not exist: " << *it << '\n';
-        }
+          exist = new TrieNode(*it);
+          exist->complete = it + 1 == item.end();
+          current->next.insert(pair<char, TrieNode>(*it, *exist));
 
+          std::cout << "adding: " << *it << " on: " << current->letter << " next size: " << current->next.size() << '\n';
+        } else {
+          exist->count += 1;
+          exist->complete = it + 1 == item.end() || exist->complete;
+          std::cout << "exist: " << exist->letter << " c:" << exist->count << " end: " << exist->complete << '\n';
+        }
         ++it;
+        current = exist;
     }
+    //current = this;
 
   }
 
-  void getExist(char letter, TrieNode *node){
+  TrieNode* getExist(char letter, TrieNode *current){
+    std::cout << "finding: " << letter << " on: " << current->letter << " size: " << current->next.size() << '\n';
     map<char, TrieNode>::iterator it;
-    it = this->next.find(letter);
-    if (it != this->next.end()){
-      node = &it->second;
-      std::cout << "exist: " << letter << '\n';
+    it = current->next.find(letter);
+    if (it != current->next.end()){
+      //std::cout << "exist: " << it->first << '\n';
+      return &current->next[letter];
     }
+    return NULL;
   }
 
 };
@@ -105,9 +121,9 @@ public:
 
 void case0(){
   std::vector<string> v;
-  v = {"add hack",
-            "add hac",
-            "add ha"
+  v = {   //"add hack",
+            "add ha",
+            "add hac"
             // "find hac",
             // "add hackerrank",
             // "add hackk",
