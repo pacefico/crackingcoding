@@ -4,3 +4,4 @@ clang hashtables_ransom_note.cc -o hashtables_ransom_note.o -Wall -lstdc++ -std=
 clang stacks_balanced_brackets.cc -o stacks_balanced_brackets.o -Wall -lstdc++ -std=c++0x
 clang queue_two_stacks.cc -o queue_two_stacks.o -lstdc++ -std=c++0x
 clang bin_search_tree.cc -o bin_search_tree.o -lstdc++ -std=c++0x
+clang tries_contacts.cc -o tries_contacts.o -lstdc++ -std=c++0x
