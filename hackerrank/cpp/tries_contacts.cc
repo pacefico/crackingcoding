@@ -99,6 +99,29 @@ public:
     return NULL;
   }
 
+  int find(string item){
+    std::cout << "\nfinding: " << item << '\n';
+    //map<char, TrieNode>::iterator it;
+    TrieNode * current;
+    current = this;
+    string::iterator it = item.begin();
+    while(it != item.end()){
+      TrieNode * exist;
+      exist = getExist(*it, current);
+      if (exist != NULL){
+        current = &current->next[*it];
+        if (current != NULL && it +1 == item.end()){
+          printf("%c\n",  current->letter);
+          return current->count;
+        }
+      }
+      ++it;
+    }
+
+
+    return 0;
+  }
+
 };
 
 class Tries{
@@ -113,6 +136,9 @@ public:
   void add(string item){
     this->root->add(item);
   }
+  int find(string item){
+    return this->root->find(item);
+  }
 
 };
 
@@ -121,22 +147,22 @@ void case0(){
   v = {   //"add hack",
             "add hac",
             "add ha",
-            // "find hac",
-            "add hackerrank"
-            // "add hackk",
-            // "add hackee",
-            // "find ac",
-            // "add ack",
-            // "add acki",
-            // "add acka",
-            // "add ac",
-            // "add hackker",
-            // "add rank",
-            // "find hac",
-            // "find ha",
-            // "find hak",
-            // "find h",
-            // "find ac"
+            "add hackerrank",
+            "find hac",
+            "add hackk",
+            "add hackee",
+            "find ac",
+            "add ack",
+            "add acki",
+            "add acka",
+            "add ac",
+            "add hackker",
+            "add rank",
+            "find hac",
+            "find ha",
+            "find hak",
+            "find h",
+            "find ac"
           };
     Tries *tries;
     tries = new Tries();
@@ -146,6 +172,8 @@ void case0(){
       values = splitString(v[i], ' ');
       if (values[0] == "add"){
         tries->add(values[1].c_str());
+      } else if (values[0] == "find"){
+        printf("%d", tries->find(values[1].c_str()));
       }
     }
 
