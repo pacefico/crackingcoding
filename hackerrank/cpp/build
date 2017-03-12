@@ -9,3 +9,6 @@ clang bubble_sort.cc -o bubble_sort.o -lstdc++ -std=c++0x
 clang comparator.cc -o comparator.o -lstdc++ -std=c++0x
 clang fibonacci.cc -o fibonacci.o -lstdc++ -std=c++0x
 clang factorial.cc -o factorial.o -lstdc++ -std=c++0x
+
+#arista network
+clang string_test.cc -o string_test.o -lstdc++ -std=c++0x
