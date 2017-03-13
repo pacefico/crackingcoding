@@ -27,17 +27,14 @@ class MyQueue(object):
         self.switch()
         value = self.stack_aux.pop()
         self.stack_aux.append(value)
-        #print('Print head: {}. Queue:{}. Aux:{}'.format(value, self.stack, self.stack_aux))
         return value
 
     def pop(self):
         self.switch()
         response = self.stack_aux.pop()
-        #print("Dequeuing:{}. Queue:{}. Aux:{}".format(response, self.stack, self.stack_aux))
 
     def put(self, value):
         self.stack.append(value)
-        #print("Enqueue {}. Queue:{}. Aux:{}".format(value, self.stack, self.stack_aux))
 
 def my_tests():
     def case0():

@@ -112,7 +112,6 @@ bool has_cycle(Node* head){
     node = head->next;
     int count = 0;
     while (node != NULL){
-      //printf("count:%d\n", count);
       if (node == head || node->next == head || count >= 100){
           return 1;
       }

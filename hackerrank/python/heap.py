@@ -122,7 +122,6 @@ class MinHeap(object):
         self.values = []
 
     def add(self, item):
-        # print("add min:{}".format(item))
         heapq.heappush(self.values, item)
 
     def peek(self):
@@ -143,7 +142,6 @@ class MaxHeap(object):
         self.values = []
 
     def add(self, item):
-        # print("add max:{}".format(item))
         heapq.heappush(self.values, -item)
 
     def peek(self):
@@ -181,10 +179,6 @@ class MedianHeap():
         if self.highers.size() - self.lowers.size() >= 2:
             print("rebalancing...")
             self.lowers.add(self.highers.poll())
-
-        # if self.lowers.size() - self.highers.size() >= 2:
-        #     print("rebalancing...")
-        #     self.highers.add(self.lowers.poll())
 
     def get_median(self):
         response = 0
@@ -261,8 +255,8 @@ def case4():
         results.append(median.get_median())
         print(median.get_median())
 
-    # valid_results = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5]
-    # assert valid_results == results
+    valid_results = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5]
+    assert valid_results == results
 
 case4()
 

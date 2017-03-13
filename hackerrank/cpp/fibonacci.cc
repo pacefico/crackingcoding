@@ -17,7 +17,6 @@ void case1(){
   for (size_t i = 0; i < 20; i++) {
     cout << "fibonnacci(" << i << ")=" << fibonacci(i) << endl;
   }
-
 }
 
 int main(){

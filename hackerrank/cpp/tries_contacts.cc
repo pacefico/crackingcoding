@@ -1,26 +1,4 @@
-// #include <map>
-// #include <set>
-// #include <list>
-// #include <cmath>
-// #include <ctime>
-// #include <deque>
-// #include <queue>
-// #include <stack>
-// #include <string>
-// #include <bitset>
-// #include <cstdio>
-// #include <limits>
-// #include <vector>
-// #include <climits>
-// #include <cstring>
-// #include <cstdlib>
 #include <fstream>
-// #include <numeric>
-// #include <sstream>
-// #include <iostream>
-// #include <algorithm>
-// #include <unordered_map>
-
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -60,27 +38,21 @@ public:
   }
 
   void add(string item){
-    //std::cout << "\nadding: " << item << " on: " << this->letter << '\n';
-
     string::iterator it = item.begin();
     TrieNode *current;
     current = this;
     while(it != item.end()){
-        //std::cout << "it: " << *it << '\n';
         TrieNode *exist;
         exist = this->getExist(*it, current);
 
         if (exist == NULL){
-          //std::cout << "not exist: " << *it << '\n';
           exist = new TrieNode(*it);
           exist->complete = it + 1 == item.end();
           exist->count ++;
           current->next.insert(pair<char, TrieNode>(*it, *exist));
-          //std::cout << "adding: " << *it << " on: " << current->letter << " next size: " << current->next.size() << '\n';
         } else {
           exist->count ++;
           exist->complete = it + 1 == item.end() || exist->complete;
-          //std::cout << "exist: " << exist->letter << " c:" << exist->count << " end: " << exist->complete << '\n';
         }
         current = &current->next[*it];
         exist = NULL;
@@ -89,7 +61,6 @@ public:
   }
 
   TrieNode* getExist(char letter, TrieNode *current){
-    //std::cout << "finding: " << letter << " on: " << current->letter << " size: " << current->next.size() << '\n';
     map<char, TrieNode>::iterator it;
     it = current->next.find(letter);
     if (it != current->next.end()){
@@ -99,8 +70,6 @@ public:
   }
 
   int find(string item){
-    //std::cout << "\nfinding: " << item << '\n';
-    //map<char, TrieNode>::iterator it;
     TrieNode * current;
     current = this;
     int count = 0;
@@ -111,7 +80,6 @@ public:
       if (exist != NULL){
         current = &current->next[*it];
         if (current != NULL && it +1 == item.end() && current->letter == *it){
-          //printf("-%c-",  current->letter);
           count = current->count;
           break;
         }
@@ -132,13 +100,10 @@ public:
     this->root = new TrieNode('*');
   }
   void add(string item){
-    //std::cout << "adding: " << item << endl;
     this->root->add(item);
   }
   int find(string item){
-    //std::cout << "finding: " << item;
     int response = this->root->find(item);
-    //std::cout << " count: " << response << endl;
     return response;
   }
 };
@@ -180,7 +145,6 @@ void case0(){
 }
 
 void case1(){
-
   Tries *tries;
   tries = new Tries();
   string line;
@@ -193,30 +157,21 @@ void case1(){
     while ( getline (input_file,line) )
     {
       std::vector<string> values;
-      // if (count == 20){
-      //   break;
-      // }
-
       values = splitString(line, ' ');
       if (values[0] == "add"){
         tries->add(values[1].c_str());
       } else if (values[0] == "find"){
         int result = tries->find(values[1].c_str());
-
         getline (output_file,line_output);
         if (result != atoi(line_output.c_str())){
           std::cout << "false: " << count << " expect: " << line_output << '\n';
-          //break;
         }
 
       }
-      //cout << line << '\n';
       count ++;
-
     }
     input_file.close();
   }
-
 }
 
 int main(){

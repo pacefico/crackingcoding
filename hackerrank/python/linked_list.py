@@ -73,11 +73,8 @@ def case5():
     return Node(1)
 
 assert has_cycle(case0()) == True
-# assert has_cycle(case1()) == True
-# assert has_cycle(case2()) == True
+assert has_cycle(case1()) == True
+assert has_cycle(case2()) == True
 assert has_cycle(case3()) == False
-# assert has_cycle(case4()) == True
-# assert has_cycle(case5()) == False
-
-# print(has_cycle(case0()))
-# print(has_cycle(case1()))
+assert has_cycle(case4()) == True
+assert has_cycle(case5()) == False

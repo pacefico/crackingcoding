@@ -29,7 +29,6 @@ vector<string> splitString(string s, char delim){
   return elements;
 }
 
-
 class MyQueue {
 
     public:
@@ -40,7 +39,6 @@ class MyQueue {
 
         void swap(){
           if (stack_oldest_on_top.size() == 0){
-            //printf("size==0\n");
               while (stack_newest_on_top.size() > 0){
                 stack_oldest_on_top.push(stack_newest_on_top.top());
                 stack_newest_on_top.pop();
@@ -76,15 +74,12 @@ void case0(){
     if (s[0] == '1'){
       vector<int> values = splitInt(s, ' ');
       q.push(values[1]);
-      //printf("%s int=%d\n", v[i].c_str(),values[1] );
     } else if(s[0] == '2'){
       q.pop();
     } else {
       cout << q.front() << endl;
     }
   }
-
-
 }
 
 int main(){
@@ -107,6 +102,5 @@ int main_from_test() {
         }
         else cout << q1.front() << endl;
     }
-    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
     return 0;
 }

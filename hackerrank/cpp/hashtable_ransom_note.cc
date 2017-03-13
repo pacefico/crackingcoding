@@ -1,25 +1,7 @@
 #include <map>
-// #include <set>
-// #include <list>
-// #include <cmath>
-// #include <ctime>
-// #include <deque>
-// #include <queue>
-// #include <stack>
 #include <string>
-// #include <bitset>
-// #include <cstdio>
-// #include <limits>
 #include <vector>
-// #include <climits>
-// #include <cstring>
-// #include <cstdlib>
-// #include <fstream>
-// #include <numeric>
-// #include <sstream>
-// #include <iostream>
 #include <algorithm>
-// #include <unordered_map>
 #include <iostream>
 #include <cstdio>
 #include <cassert>
@@ -58,9 +40,6 @@ bool ransom_note(vector<string> magazine, vector<string> ransom) {
 }
 
 void case0(){
-  //string magazine = "give me one grand today night me Me";
-  //string ransom = "give one grand today";
-
   vector<string> magazine;
   magazine = {"give", "me", "one", "grand", "today", "night", "me"};
   vector<string> ransom;

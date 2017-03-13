@@ -14,14 +14,14 @@ url: https://www.hackerrank.com/challenges/ctci-ransom-note
 def ransom_note(magazine, ransom):
     ndict = {}
     for k in magazine:
-        if k in ndict.keys():
+        if k in ndict:
             ndict[k] += 1
         else:
             ndict[k] = 1
 
     count = 0
     for item in ransom:
-        if item in ndict.keys():
+        if item in ndict:
             value = ndict[item]
             if value > 0:
                 ndict[item] -= 1

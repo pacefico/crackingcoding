@@ -151,5 +151,4 @@ def original():
         elif op == "find":
             t.find(contact)
 
-#my_test(case0())
 from_file()

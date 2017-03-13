@@ -97,7 +97,6 @@ class TriesNonRecursive:
 
     def add(self, item):
         self.root.add(list(item))
-        #print(self.root)
 
     def find(self, item):
         self.root.find(list(item))
@@ -144,4 +143,3 @@ def original():
         op, contact = input().strip().split(' ')
 
 my_test(case0())
-#from_file()
