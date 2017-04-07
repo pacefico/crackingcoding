@@ -41,7 +41,7 @@ def test_stress():
     N = 16
 
     length = 1
-    for i in range(1, N):
+    for i in range(N):
         length = length * 2
         print("it: {}. Qty:{}".format(i, length))
         my_vec = []
