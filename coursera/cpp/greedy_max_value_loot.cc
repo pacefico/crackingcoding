@@ -37,11 +37,6 @@ bool compare(const Values& first, const Values& second){
 
 vector<Values> comparator(vector<Values> values) {
   sort(values.begin(), values.end(), compare);
-
-  // for (size_t i = 0; i < values.size(); i++) {
-  //   std::cout << "comparator() v: " << values[i].value << " w: " << values[i].weight << std::endl;
-  // }
-
   return values;
 }
 
@@ -52,32 +47,29 @@ vector<Values> get_sorted(vector<int> weights, vector<int> values){
     val.weight = weights[i];
     val.value = values[i];
     new_values.push_back(val);
-    // std::cout << "get_sorted() i: " << i << " v: " << val.value << " w: " << val.weight << std::endl;
   }
-  // std::cout << "get_sorted() new_values size: " << new_values.size() << std::endl;
   return comparator(new_values);
 }
 
 double get_optimal_value(int capacity, vector<int> weights, vector<int> values) {
   double value = 0.0;
   int currentWeight = 0;
+  // sort the input to get max value/weight from items
   vector<Values> sortedValues = get_sorted(weights, values);
 
-  // std::cout << "sorted size: " << sortedValues.size() <<  " w size: " << weights.size() << std::endl;
   for (size_t i = 0; i < sortedValues.size(); i++) {
-    // std::cout << "i: " << i <<  " v: " << sortedValues[i].value << " w: " << sortedValues[i].weight << std::endl;
-
     if(currentWeight == capacity){
       return value;
     }
     if (currentWeight + sortedValues[i].weight <= capacity){
+      // adding item one-by-one from sorted list
       value += sortedValues[i].value;
       currentWeight += sortedValues[i].weight;
-    } else{
+    } else {
+      // adding fraction of capacity
       int remain = capacity - currentWeight;
       value += (double) sortedValues[i].value * ((double) remain / sortedValues[i].weight);
       currentWeight += remain;
-      // std::cout << "i: " << i <<  " adding remain: " << remain << std::endl;
     }
   }
   return value;
@@ -85,26 +77,23 @@ double get_optimal_value(int capacity, vector<int> weights, vector<int> values) 
 
 void run(int capacity, vector<int> weights, vector<int> values){
   double optimal_value = get_optimal_value(capacity, weights, values);
-  std::cout.precision(8);
+  std::cout.precision(10);
   std::cout << optimal_value << std::endl;
 }
 
 void test0(){
   int n = 3;
   int capacity = 50;
-
   vector<int> values(n);
   values = {60, 100, 120};
   vector<int> weights(n);
   weights = {20, 50, 30};
-
   run(capacity, weights, values);
 }
 
 void test1(){
   int n = 1;
   int capacity = 10;
-
   vector<int> values(n);
   values = {500};
   vector<int> weights(n);
@@ -115,15 +104,12 @@ void test1(){
 void test2(){
   int n = 4;
   int capacity = 60;
-
   vector<int> values(n);
   values = {60, 100, 120, 120};
   vector<int> weights(n);
   weights = {20, 50, 30, 40};
-
   run(capacity, weights, values);
 }
-
 
 int main1(){
   test0();
