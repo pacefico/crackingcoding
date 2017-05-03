@@ -1,8 +1,10 @@
 #python 3
 
+
 def optimal_solution(n):
+    if n == 1:
+        return 0, [1]
     ops = [0]*(n+1)
-    sequence = []
 
     for i in range(1, n+1):
         seq = [ops[i - 1] + 1]
@@ -10,6 +12,7 @@ def optimal_solution(n):
         if i % 3 == 0: seq.append(ops[i // 3] + 1)
         ops[i] = min(seq)
 
+    sequence = []
     while (n>=1):
         sequence.append(n)
         if ops[n - 1] == ops[n] - 1:
@@ -19,11 +22,31 @@ def optimal_solution(n):
         elif n % 3 == 0 and ops[n // 3] == ops[n] - 1:
             n = n // 3
 
-    return ops[-1], reversed(sequence)
+    return ops[-1]-1, reversed(sequence)
+
+
+def output(n):
+    ops, sequence = list(optimal_solution(n))
+    print(ops)
+    for x in sequence:
+        print(x, end=" ")
+
+
+def test0():
+    output(5)
+
+
+def test1():
+    output(1)
+
+
+def test2():
+    output(96234)
 
 
 n = int(input())
-ops, sequence = list(optimal_solution(n))
-print(ops)
-for x in sequence:
-    print(x, end=" ")
+output(n)
+
+# test0()
+# test1()
+# test2()
